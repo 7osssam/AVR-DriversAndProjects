@@ -20,7 +20,7 @@
 #define TOGGLE_BIT(reg, bit) (reg ^= (1U << (bit)))
 
 /* Check if a bit is set to 1 or 0 (returns 1 if 1, 0 if 0) */
-#define GET_BIT(reg, bit) ((reg >> (bit)) & 1U)
+#define READ_BIT(reg, bit) ((reg >> (bit)) & 1U)
 
 /* Check if a bit is set to 1 */
 #define IS_BIT_SET(reg, bit) (reg & (1U << (bit)))
