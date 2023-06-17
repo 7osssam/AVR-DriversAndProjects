@@ -10,7 +10,6 @@
  *
  *******************************************************************************/
 #include "BIT_MACROS.h"
-#include "STD_TYPES.h"
 #include "SETTINGS.h"
 
 #include <util/delay.h> /* For the delay functions */
@@ -32,7 +31,6 @@
  */
 static void intToSting(int num, unsigned char *str) // convert int to string
 {
-	int mod;			// remainder
 	int i = 0;			// index
 	int isNegative = 0; // flag
 
@@ -44,7 +42,7 @@ static void intToSting(int num, unsigned char *str) // convert int to string
 
 	do // we use do while to make sure that the loop will run at least once even if the number is 0
 	{
-		mod = num % 10;		  // get the remainder
+		int mod = num % 10;	  // get the remainder
 		str[i++] = mod + '0'; // convert the remainder to char and put it in the array and increment the index
 
 		num = num / 10; // update the number (remove the last digit)
@@ -67,10 +65,9 @@ static void intToSting(int num, unsigned char *str) // convert int to string
 
 	i--; // decrement i by 1
 
-	char temp;						 // temp char to swap
 	for (int k = 0; k <= i / 2; k++) // don't forget = in <= (if the number is 2 digits)
 	{
-		temp = str[k];
+		char temp = str[k];
 		str[k] = str[i - k];
 		str[i - k] = temp;
 	}
@@ -133,10 +130,10 @@ void LCD_sendCommand(uint8 command)
 	_delay_ms(1);											 /* delay for processing Tpw - Tdws = 190ns */
 
 #if (LCD_DATA_BITS_MODE == _4_BIT_MODE)
-	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB4_PIN_ID, GET_BIT(command, 4));
-	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB5_PIN_ID, GET_BIT(command, 5));
-	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB6_PIN_ID, GET_BIT(command, 6));
-	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB7_PIN_ID, GET_BIT(command, 7));
+	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB4_PIN_ID, READ_BIT(command, 4));
+	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB5_PIN_ID, READ_BIT(command, 5));
+	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB6_PIN_ID, READ_BIT(command, 6));
+	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB7_PIN_ID, READ_BIT(command, 7));
 
 	_delay_ms(1);											/* delay for processing Tdsw = 100ns */
 	GPIO_writePin(LCD_E_PORT_ID, LCD_E_PIN_ID, LOGIC_LOW);	/* Disable LCD E=0 */
@@ -144,10 +141,10 @@ void LCD_sendCommand(uint8 command)
 	GPIO_writePin(LCD_E_PORT_ID, LCD_E_PIN_ID, LOGIC_HIGH); /* Enable LCD E=1 */
 	_delay_ms(1);											/* delay for processing Tpw - Tdws = 190ns */
 
-	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB4_PIN_ID, GET_BIT(command, 0));
-	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB5_PIN_ID, GET_BIT(command, 1));
-	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB6_PIN_ID, GET_BIT(command, 2));
-	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB7_PIN_ID, GET_BIT(command, 3));
+	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB4_PIN_ID, READ_BIT(command, 0));
+	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB5_PIN_ID, READ_BIT(command, 1));
+	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB6_PIN_ID, READ_BIT(command, 2));
+	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB7_PIN_ID, READ_BIT(command, 3));
 
 	_delay_ms(1);										   /* delay for processing Tdsw = 100ns */
 	GPIO_writePin(LCD_E_PORT_ID, LCD_E_PIN_ID, LOGIC_LOW); /* Disable LCD E=0 */
@@ -173,10 +170,10 @@ void LCD_displayCharacter(uint8 data)
 	_delay_ms(1);											  /* delay for processing Tpw - Tdws = 190ns */
 
 #if (LCD_DATA_BITS_MODE == 4)
-	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB4_PIN_ID, GET_BIT(data, 4));
-	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB5_PIN_ID, GET_BIT(data, 5));
-	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB6_PIN_ID, GET_BIT(data, 6));
-	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB7_PIN_ID, GET_BIT(data, 7));
+	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB4_PIN_ID, READ_BIT(data, 4));
+	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB5_PIN_ID, READ_BIT(data, 5));
+	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB6_PIN_ID, READ_BIT(data, 6));
+	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB7_PIN_ID, READ_BIT(data, 7));
 
 	_delay_ms(1);											/* delay for processing Tdsw = 100ns */
 	GPIO_writePin(LCD_E_PORT_ID, LCD_E_PIN_ID, LOGIC_LOW);	/* Disable LCD E=0 */
@@ -184,10 +181,10 @@ void LCD_displayCharacter(uint8 data)
 	GPIO_writePin(LCD_E_PORT_ID, LCD_E_PIN_ID, LOGIC_HIGH); /* Enable LCD E=1 */
 	_delay_ms(1);											/* delay for processing Tpw - Tdws = 190ns */
 
-	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB4_PIN_ID, GET_BIT(data, 0));
-	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB5_PIN_ID, GET_BIT(data, 1));
-	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB6_PIN_ID, GET_BIT(data, 2));
-	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB7_PIN_ID, GET_BIT(data, 3));
+	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB4_PIN_ID, READ_BIT(data, 0));
+	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB5_PIN_ID, READ_BIT(data, 1));
+	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB6_PIN_ID, READ_BIT(data, 2));
+	GPIO_writePin(LCD_DATA_PORT_ID, LCD_DB7_PIN_ID, READ_BIT(data, 3));
 
 	_delay_ms(1);										   /* delay for processing Tdsw = 100ns */
 	GPIO_writePin(LCD_E_PORT_ID, LCD_E_PIN_ID, LOGIC_LOW); /* Disable LCD E=0 */
@@ -219,14 +216,58 @@ void LCD_displayString(const char *Str)
  * Description :
  * Display the required decimal value on the screen
  */
-void LCD_displayNumber(int data)
+void LCD_displayNumber(int num)
 {
-	unsigned char str[32]; /* create char array to store the digits of the number in it */
-	intToSting(data, str); /* convert the integer number to string */
+	uint8 str[32]; /* create char array to store the digits of the number in it */
 
-	/* Alternativly you can use itoa C function to convert the integer to string */
-	// itoa(data, str, 10); /* Use itoa C function to convert the data to its corresponding ASCII value, 10 for decimal */
-	LCD_displayString(str); /* display the string */
+	uint8 i = 0;		  // index
+	uint8 isNegative = 0; // flag
+
+	if (num == 0)
+	{
+		LCD_displayCharacter('0');
+		return;
+	}
+	else
+	{
+		if (num < 0) // if the number is negative
+		{
+			isNegative = 1; // set the flag
+			num = num * -1; // make the number positive
+		}
+		do // we use do while to make sure that the loop will run at least once even if the number is 0
+		{
+			int mod = num % 10;	  // get the remainder
+			str[i++] = mod + '0'; // convert the remainder to char and put it in the array and increment the index
+
+			num = num / 10; // update the number (remove the last digit)
+		} while (num > 0);	// num is positive
+
+		if (isNegative) // if the number is negative
+		{
+			str[i++] = '-'; // put the negative sign at the end of the string and increment the index
+		}
+		str[i] = 0; //! null at the end
+	}
+
+	/*
+	 * the array of this number is reversed
+	 * so we need to reverse it easier to print each char in the array from the last element to the first one
+	 * we already have the index of the last char in the array (i)
+	 * //! but note that i is the index of the null char at this momment so we need to decrement it by 1
+	 */
+
+	i--; // decrement i by 1
+
+	for (int k = i; k >= 0; k--) // don't forget = in <= (if the number is 2 digits)
+	{
+		LCD_displayCharacter(str[k]);
+	}
+
+	// =================== another way ===================
+	// char buff[16];			 /* String to hold the ascii result */
+	// itoa(data, buff, 10);	 /* Use itoa C function to convert the data to its corresponding ASCII value, 10 for decimal */
+	// LCD_displayString(buff); /* Display the string */
 }
 
 /*
@@ -276,15 +317,120 @@ void LCD_clearScreen(void)
 	LCD_sendCommand(LCD_CLEAR_COMMAND); /* Send clear display command */
 }
 
-void LCD_displayStringRowColumnCenter(uint8 row, uint8 col, const char *Str)
+/*
+ * Description :
+ * Display the required string in the center of the screen of specified row
+ */
+void LCD_displayStringCenter(uint8 row, const char *Str)
 {
-	uint8 i = 0;
-	uint8 stringSize = 0;
-	while (Str[i] != '\0')
+	uint8 postion = 0;
+	while (Str[postion] != '\0')
 	{
-		stringSize++;
-		i++;
+		postion++;
 	}
-	LCD_moveCursor(row, col + (16 - stringSize) / 2); /* go to to the required LCD position */
-	LCD_displayString(Str);							  /* display the string */
+	LCD_moveCursor(row, (LCD_NUM_POSITIONS - postion) / 2); /* go to to the required LCD position */
+	LCD_displayString(Str);									/* display the string */
 }
+
+/*
+ * Description :
+ * Move the cursor to a specified row and column index on the screen
+ */
+void LCD_Goto_XY(uint8 x_row, uint8 y_col)
+{
+	uint8 AddressCommand = 0;
+	if (x_row < LCD_NUM_LINES && y_col < LCD_NUM_POSITIONS)
+	{
+		if (x_row == 0)
+		{
+			/* Location is at first line */
+			AddressCommand = y_col;
+		}
+		else if (x_row == 1)
+		{
+			/* Location is at second line */
+			AddressCommand = y_col + 0x40;
+		}
+	}
+
+	/* Set bit number 7 for Set DDRAM Address command the send the command*/
+	LCD_sendCommand(AddressCommand + LCD_SET_CURSOR_LOCATION);
+}
+
+/*
+ * Description :
+ * Display special character at a specified location on the screen (GDDRAM)
+ */
+void LCD_displaySpecialCharacter(uint8 *Pattern, uint8 Location)
+{
+	uint8 iLoop;
+	uint8 CGRAMAddress = 0x40 + (Location * 8); /* Set CGRAM Address */
+
+	/* Send the Special Character Pattern to CGRAM */
+	LCD_sendCommand(CGRAMAddress);
+
+	for (iLoop = 0; iLoop < 8; iLoop++)
+	{
+		LCD_displayCharacter(Pattern[iLoop]);
+	}
+	LCD_sendCommand(LCD_SET_CURSOR_LOCATION); /* Return to the home position */
+}
+
+/*
+ * Description :
+ * Display Binary number on the screen (8-bits)
+ */
+void LCD_displayBinary(uint8 num)
+{
+	unsigned int mask = 1 << (sizeof(num) * 8 - 1);
+	while (mask)
+	{
+		if (num & mask)
+			LCD_displayCharacter('1');
+		else
+			LCD_displayCharacter('0');
+		mask >>= 1;
+	}
+}
+
+/*
+ * Description :
+ * Display Hexadecimal number on the screen (8-bits)
+ */
+void LCD_displayHex(uint8 num)
+{
+	const char hexLookup[] = "0123456789ABCDEF";
+	uint8 hex = num >> 4;
+	uint8 hexReminder = num & 0x0F;
+
+	LCD_displayCharacter(hexLookup[hex]);
+	LCD_displayCharacter(hexLookup[hexReminder]);
+}
+
+/*************** Another Method for LCD_displayHex ***************/
+/*
+ void LCD_displayHex(uint8 num)
+{
+	uint8 hex = num >> 4;
+
+	if (hex <= 9)
+	{
+		LCD_displayCharacter(hex + '0');
+	}
+	else
+	{
+		LCD_displayCharacter(hex - 10 + 'A');
+	}
+
+	uint8 hexReminder = num & 0x0F;
+
+	if (hexReminder <= 9)
+	{
+		LCD_displayCharacter(hexReminder + '0');
+	}
+	else
+	{
+		LCD_displayCharacter(hexReminder - 10 + 'A');
+	}
+}
+*/
