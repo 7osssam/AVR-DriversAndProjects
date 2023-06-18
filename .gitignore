@@ -1,4 +1,4 @@
-/.vscode 
+/cppcheck_misra
 
 # Prerequisites
 *.d
