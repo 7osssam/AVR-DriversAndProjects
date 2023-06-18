@@ -22,19 +22,19 @@
 #define STANDARD_KEYPAD /* for eta32mini kit */
 
 /* Keypad configurations for number of rows and columns */
-#define KEYPAD_NUM_COLS 4
-#define KEYPAD_NUM_ROWS 4
+#define KEYPAD_NUM_COLS 				4
+#define KEYPAD_NUM_ROWS 				4
 
 /* Keypad Port Configurations */
-#define KEYPAD_ROW_PORT_ID PORTB_ID
-#define KEYPAD_FIRST_ROW_PIN_ID PIN4_ID
+#define KEYPAD_ROW_PORT_ID 				 PORTB_ID
+#define KEYPAD_FIRST_ROW_PIN_ID			 PIN4_ID
 
-#define KEYPAD_COL_PORT_ID PORTD_ID
-#define KEYPAD_FIRST_COL_PIN_ID PIN2_ID
+#define KEYPAD_COL_PORT_ID 				 PORTD_ID
+#define KEYPAD_FIRST_COL_PIN_ID 		 PIN2_ID
 
 /* Keypad button logic configurations */
-#define KEYPAD_BUTTON_PRESSED LOGIC_LOW
-#define KEYPAD_BUTTON_RELEASED LOGIC_HIGH
+#define KEYPAD_BUTTON_PRESSED 			 LOGIC_LOW
+#define KEYPAD_BUTTON_RELEASED 			 LOGIC_HIGH
 
 /*******************************************************************************
  *                      Functions Prototypes                                   *
