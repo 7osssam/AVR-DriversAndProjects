@@ -1,0 +1,10 @@
+{
+	"C_Cpp.errorSquiggles": "enabled",
+	"C_Cpp.dimInactiveRegions": true,
+	"C_Cpp.default.configurationProvider": "AVR",
+	// hide .ctu-info and .dump files from the explorer (CPPCheck dump files)
+	"files.exclude": {
+		"**/*.ctu-info": true,
+		"**/*.dump": true,
+	},
+}

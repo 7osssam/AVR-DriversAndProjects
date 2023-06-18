@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"settings.h": "c",
+			"std_types.h": "c",
+			"delay.h": "c",
+			"bit_macros.h": "c"
+		}
+	}
+}
