@@ -6,7 +6,7 @@
  *
  * Description: Source file for the Keypad driver
  *
- * Author: Mohamed Tarek
+ * Author: Hossam Mohamed & Mohamed Tarek
  *
  *******************************************************************************/
 #include "KEYPAD.h"
