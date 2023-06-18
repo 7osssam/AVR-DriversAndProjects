@@ -22,8 +22,8 @@
 #define STANDARD_KEYPAD /* for eta32mini kit */
 
 /* Keypad configurations for number of rows and columns */
-#define KEYPAD_NUM_COLS 				4
-#define KEYPAD_NUM_ROWS 				4
+#define KEYPAD_NUM_COLS 				 4
+#define KEYPAD_NUM_ROWS 				 4
 
 /* Keypad Port Configurations */
 #define KEYPAD_ROW_PORT_ID 				 PORTB_ID
