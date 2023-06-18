@@ -10,6 +10,7 @@
 				"D:\\XDUMP\\AVR_Drivers\\01-LIB\\**",
 				"D:\\XDUMP\\AVR_Drivers\\02-MCAL\\**",
 				"D:\\XDUMP\\AVR_Drivers\\03-HAL\\**",
+				"D:\\XDUMP\\AVR_Drivers\\APP\\**",
 				"D:\\XDUMP\\AVR_Drivers\\src\\**"
 			],
 			"compilerArgs": [
@@ -31,9 +32,9 @@
 			"browse": {
 				"path": [
 					"D:\\XDUMP\\Toolchain\\AVR\\avr8-gnu-toolchain-win32_x86_64\\avr\\include\\avr\\**\\**",
+					"D:\\XDUMP\\AVR_Drivers\\01-LIB\\",
 					"D:\\XDUMP\\AVR_Drivers\\02-MCAL\\",
 					"D:\\XDUMP\\AVR_Drivers\\03-HAL\\",
-					"D:\\XDUMP\\AVR_Drivers\\01-LIB\\",
 					"D:\\XDUMP\\AVR_Drivers\\APP\\**",
 					"D:\\XDUMP\\AVR_Drivers\\src"
 				]
