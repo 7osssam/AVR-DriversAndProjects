@@ -18,21 +18,21 @@
 /*******************************************************************************
  *                                LCD Commands                                 *
  *******************************************************************************/
-#define LCD_CLEAR_COMMAND 0x01					/* replace all characters with ASCII 'space' */
-#define LCD_GO_TO_HOME 0x02						/* return cursor to first position on first line */
-#define LCD_DECREMENT_CURSOR 0x04				/* shift cursor to left */
-#define LCD_INCREMENT_CURSOR 0x06				/* shift cursor to right */
-#define LCD_SHIFT_DISPLAY_RIGHT 0x05			/* shift display to right */
-#define LCD_SHIFT_DISPLAY_LEFT 0x07				/* shift display to left */
-#define LCD_CURSOR_BLINK 0x0F					/* (cursor on, blink char */
-#define LCD_SHIFT_CURSOR_POSITION_TO_LEFT 0x10	/* (shift cursor to left) */
-#define LCD_TWO_LINES_EIGHT_BITS_MODE 0x38		/* 0x38 for 8-bit mode */
-#define LCD_TWO_LINES_FOUR_BITS_MODE 0x28		/* 0x28 for 4-bit mode */
-#define LCD_TWO_LINES_FOUR_BITS_MODE_INIT1 0x33 /* 0x33 for 4-bit mode */
-#define LCD_TWO_LINES_FOUR_BITS_MODE_INIT2 0x32 /* 0x32 for 4-bit mode */
-#define LCD_CURSOR_OFF 0x0C						/* when cursor is off, no need to blink */
-#define LCD_CURSOR_ON 0x0E						/* when cursor is on, no need to blink */
-#define LCD_SET_CURSOR_LOCATION 0x80			/* Set cursor position in DDRAM */
+#define LCD_CLEAR_COMMAND 					0x01 /* replace all characters with ASCII 'space' */
+#define LCD_GO_TO_HOME 						0x02 /* return cursor to first position on first line */
+#define LCD_DECREMENT_CURSOR 				0x04 /* shift cursor to left */
+#define LCD_INCREMENT_CURSOR 				0x06 /* shift cursor to right */
+#define LCD_SHIFT_DISPLAY_RIGHT				0x05 /* shift display to right */
+#define LCD_SHIFT_DISPLAY_LEFT 				0x07 /* shift display to left */
+#define LCD_CURSOR_BLINK 					0x0F /* (cursor on, blink char */
+#define LCD_SHIFT_CURSOR_POSITION_TO_LEFT	0x10 /* (shift cursor to left) */
+#define LCD_TWO_LINES_EIGHT_BITS_MODE 		0x38 /* 0x38 for 8-bit mode */
+#define LCD_TWO_LINES_FOUR_BITS_MODE 		0x28 /* 0x28 for 4-bit mode */
+#define LCD_TWO_LINES_FOUR_BITS_MODE_INIT1  0x33 /* 0x33 for 4-bit mode */
+#define LCD_TWO_LINES_FOUR_BITS_MODE_INIT2  0x32 /* 0x32 for 4-bit mode */
+#define LCD_CURSOR_OFF 						0x0C /* when cursor is off, no need to blink */
+#define LCD_CURSOR_ON 						0x0E /* when cursor is on, no need to blink */
+#define LCD_SET_CURSOR_LOCATION 			0x80 /* Set cursor position in DDRAM */
 
 /*******************************************************************************
  *                      Functions Prototypes                                   *
