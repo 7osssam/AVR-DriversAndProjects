@@ -20,7 +20,7 @@
 #define ADC_MAXIMUM_VALUE 1023
 #define ADC_REF_VOLT_VALUE 5
 
-#define ADC_INTERRUPT_MODE
+#define ADC_INTERRUPT_MODE /* Comment this line if you want to work in polling mode */
 
 /*******************************************************************************
  *                              Module Data Types                              *
