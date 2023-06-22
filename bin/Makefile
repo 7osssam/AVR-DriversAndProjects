@@ -8,12 +8,12 @@ SRC = ../src/
 LIB = ../01-LIB/
 MCAL = ../02-MCAL/
 HAL = ../03-HAL/
-SERVICES = ../SERVICES/
+APP = ../APP/Fan_Controller_system/
 
 MCU = atmega32a
 
 CC = avr-gcc -fdiagnostics-color=always
-CFLAGS = -mmcu=$(MCU) -Wall -std=c99 -O1 -I$(LIB) -I$(MCAL) -I$(HAL) -I$(SERVICES)
+CFLAGS = -mmcu=$(MCU) -Wall -std=c99 -O1 -I$(LIB) -I$(MCAL) -I$(HAL) -I$(APP)
 AFLAGS = -mmcu=$(MCU) -Wall -x assembler-with-cpp
 
 OBJCOPY = avr-objcopy
@@ -27,7 +27,7 @@ OBJFILES = $(shell find $(SRC) -name '*.c' -printf '%f ' | sed -e 's/\.c/\.o/g')
 OBJFILES += $(shell find $(LIB) -name '*.c' -printf '%f ' | sed -e 's/\.c/\.o/g')
 OBJFILES += $(shell find $(MCAL) -name '*.c' -printf '%f ' | sed -e 's/\.c/\.o/g')
 OBJFILES += $(shell find $(HAL) -name '*.c' -printf '%f ' | sed -e 's/\.c/\.o/g')
-OBJFILES += $(shell find $(SERVICES) -name '*.c' -printf '%f ' | sed -e 's/\.c/\.o/g')
+OBJFILES += $(shell find $(APP) -name '*.c' -printf '%f ' | sed -e 's/\.c/\.o/g')
 
 .PHONY: dependence clean $(NAME)
 
@@ -36,7 +36,7 @@ all: $(NAME)
 
 # generating dependencies
 $(DEP): $(shell find $(SRC) -name '*.c')
-	$(CC) -I$(LIB) -I$(MCAL) -I$(HAL) -I$(SERVICES) -MM $(shell find $(SRC) -name '*.c') > $(DEP)
+	$(CC) -I$(LIB) -I$(MCAL) -I$(HAL) -I$(APP) -MM $(shell find $(SRC) -name '*.c') > $(DEP)
 
 # include generated dependencies
 -include $(DEP)
@@ -50,7 +50,7 @@ $(DEP): $(shell find $(SRC) -name '*.c')
 	$(CC) -c $(CFLAGS) $< -o $@
 %.o : $(HAL)%.c
 	$(CC) -c $(CFLAGS) $< -o $@
-%.o : $(SERVICES)%.c
+%.o : $(APP)%.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
 # create ELF
