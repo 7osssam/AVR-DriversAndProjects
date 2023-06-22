@@ -74,6 +74,7 @@ void ADC_init(ADC_ConfigType *config_ptr)
 
 #ifdef ADC_INTERRUPT_MODE
 
+/* ADC Interrupt Service Routine executed when ADC conversion completes */
 ISR(ADC_vect)
 {
 	g_ADC_result = ADC; /* Read ADC Data after conversion complete */

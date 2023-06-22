@@ -26,7 +26,7 @@
  *                              Module Data Types                              *
  *******************************************************************************/
 #ifdef ADC_INTERRUPT_MODE
-extern volatile uint16 g_ADC_result;
+extern volatile uint16 g_ADC_result; /* Global variable to store the ADC result in interrupt mode */
 #endif
 
 typedef enum
