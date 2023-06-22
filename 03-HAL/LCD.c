@@ -12,12 +12,13 @@
 #include "BIT_MACROS.h"
 #include "SETTINGS.h"
 
-#include <util/delay.h> /* For the delay functions */
 #include "LCD_config.h"
+#include <util/delay.h> /* For the delay functions */
 
-#include "LCD.h"
 #include "GPIO.h"
+#include "LCD.h"
 
+#include <stdlib.h> // for itoa() function and dtostrf()
 /*******************************************************************************
  *                      private Functions                                      *
  *******************************************************************************/
@@ -160,6 +161,34 @@ void LCD_sendCommand(uint8 command)
 
 /*
  * Description :
+ * Move the cursor to a specified row and column index on the screen
+ */
+void LCD_Goto_XY(uint8 row, uint8 col)
+{
+	uint8 lcd_memory_address;
+
+	/* Calculate the required address in the LCD DDRAM */
+	switch (row)
+	{
+	case 0:
+		lcd_memory_address = col;
+		break;
+	case 1:
+		lcd_memory_address = col + 0x40;
+		break;
+	case 2:
+		lcd_memory_address = col + 0x10;
+		break;
+	case 3:
+		lcd_memory_address = col + 0x50;
+		break;
+	}
+	/* Move the LCD cursor to this specific address */
+	LCD_sendCommand(lcd_memory_address | LCD_SET_CURSOR_LOCATION);
+}
+
+/*
+ * Description :
  * Display the required character on the screen
  */
 void LCD_displayCharacter(uint8 data)
@@ -214,9 +243,58 @@ void LCD_displayString(const char *Str)
 
 /*
  * Description :
+ * Display the required string in the center of the screen of specified row
+ */
+void LCD_displayStringCenter(uint8 row, const char *Str)
+{
+	uint8 postion = 0;
+	while (Str[postion] != '\0')
+	{
+		postion++;
+	}
+	LCD_Goto_XY(row, (LCD_NUM_POSITIONS - postion) / 2); /* go to to the required LCD position */
+	LCD_displayString(Str);								 /* display the string */
+}
+
+/*
+ * Description :
+ * Display the required string in a specified row and column index on the screen
+ */
+void LCD_displayStringRowColumn(uint8 row, uint8 col, const char *Str)
+{
+	LCD_Goto_XY(row, col);	/* go to to the required LCD position */
+	LCD_displayString(Str); /* display the string */
+}
+
+/*
+ * Description :
+ * Display special character at a specified location on the screen (GDDRAM)
+ */
+void LCD_displaySpecialCharacter(uint8 *Pattern, uint8 Location)
+{
+	uint8 iLoop;
+	uint8 CGRAMAddress = 0x40 + (Location * 8); /* Set CGRAM Address */
+
+	/* Send the Special Character Pattern to CGRAM */
+	LCD_sendCommand(CGRAMAddress);
+
+	for (iLoop = 0; iLoop < 8; iLoop++)
+	{
+		LCD_displayCharacter(Pattern[iLoop]);
+	}
+	///* Go back to the DDRAM to display the pattern */
+	// LCD_Goto_XY(X, Y); /* Set DDRAM Address */
+	///*Display the pattern written in the CGRAM*/
+	// LCD_displayCharacter(Location);
+	/* Return to the home location */
+	LCD_sendCommand(LCD_GO_TO_HOME);
+}
+
+/*
+ * Description :
  * Display the required decimal value on the screen
  */
-void LCD_displayNumber(int num)
+void LCD_displayInteger(sint32 num)
 {
 	uint8 str[32]; /* create char array to store the digits of the number in it */
 
@@ -272,108 +350,13 @@ void LCD_displayNumber(int num)
 
 /*
  * Description :
- * Move the cursor to a specified row and column index on the screen
+ * Display the required decimal value on the screen
  */
-void LCD_moveCursor(uint8 row, uint8 col)
+void LCD_displayFloat(float32 num, uint8 numAfterDecimal)
 {
-	uint8 lcd_memory_address;
-
-	/* Calculate the required address in the LCD DDRAM */
-	switch (row)
-	{
-	case 0:
-		lcd_memory_address = col;
-		break;
-	case 1:
-		lcd_memory_address = col + 0x40;
-		break;
-	case 2:
-		lcd_memory_address = col + 0x10;
-		break;
-	case 3:
-		lcd_memory_address = col + 0x50;
-		break;
-	}
-	/* Move the LCD cursor to this specific address */
-	LCD_sendCommand(lcd_memory_address | LCD_SET_CURSOR_LOCATION);
-}
-
-/*
- * Description :
- * Display the required string in a specified row and column index on the screen
- */
-void LCD_displayStringRowColumn(uint8 row, uint8 col, const char *Str)
-{
-	LCD_moveCursor(row, col); /* go to to the required LCD position */
-	LCD_displayString(Str);	  /* display the string */
-}
-
-/*
- * Description :
- * Send the clear screen command
- */
-void LCD_clearScreen(void)
-{
-	LCD_sendCommand(LCD_CLEAR_COMMAND); /* Send clear display command */
-}
-
-/*
- * Description :
- * Display the required string in the center of the screen of specified row
- */
-void LCD_displayStringCenter(uint8 row, const char *Str)
-{
-	uint8 postion = 0;
-	while (Str[postion] != '\0')
-	{
-		postion++;
-	}
-	LCD_moveCursor(row, (LCD_NUM_POSITIONS - postion) / 2); /* go to to the required LCD position */
-	LCD_displayString(Str);									/* display the string */
-}
-
-/*
- * Description :
- * Move the cursor to a specified row and column index on the screen
- */
-void LCD_Goto_XY(uint8 x_row, uint8 y_col)
-{
-	uint8 AddressCommand = 0;
-	if (x_row < LCD_NUM_LINES && y_col < LCD_NUM_POSITIONS)
-	{
-		if (x_row == 0)
-		{
-			/* Location is at first line */
-			AddressCommand = y_col;
-		}
-		else if (x_row == 1)
-		{
-			/* Location is at second line */
-			AddressCommand = y_col + 0x40;
-		}
-	}
-
-	/* Set bit number 7 for Set DDRAM Address command the send the command*/
-	LCD_sendCommand(AddressCommand + LCD_SET_CURSOR_LOCATION);
-}
-
-/*
- * Description :
- * Display special character at a specified location on the screen (GDDRAM)
- */
-void LCD_displaySpecialCharacter(uint8 *Pattern, uint8 Location)
-{
-	uint8 iLoop;
-	uint8 CGRAMAddress = 0x40 + (Location * 8); /* Set CGRAM Address */
-
-	/* Send the Special Character Pattern to CGRAM */
-	LCD_sendCommand(CGRAMAddress);
-
-	for (iLoop = 0; iLoop < 8; iLoop++)
-	{
-		LCD_displayCharacter(Pattern[iLoop]);
-	}
-	LCD_sendCommand(LCD_SET_CURSOR_LOCATION); /* Return to the home position */
+	char buff[16]; /* String to hold the ascii result */
+	dtostrf(num, 2, numAfterDecimal, buff);
+	LCD_displayString(buff); /* Display the string */
 }
 
 /*
@@ -405,6 +388,15 @@ void LCD_displayHex(uint8 num)
 
 	LCD_displayCharacter(hexLookup[hex]);
 	LCD_displayCharacter(hexLookup[hexReminder]);
+}
+
+/*
+ * Description :
+ * Send the clear screen command
+ */
+void LCD_clearScreen(void)
+{
+	LCD_sendCommand(LCD_CLEAR_COMMAND); /* Send clear display command */
 }
 
 /*************** Another Method for LCD_displayHex ***************/
