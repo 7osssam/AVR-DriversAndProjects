@@ -1,6 +1,6 @@
 #include "calculator.h"
 
-uint8 exitKey = 1; /* to exit the program */
+uint8 g_exitKey = 1; /* to exit the program */
 
 /*
  * Description: This private function is responsible for displaying the reset menu on most right side of the LCD
@@ -19,23 +19,23 @@ static uint8 ResetMenu(void)
 
 	while (1)
 	{
-		exitKey = KEYPAD_getPressedKey(); // wait for the user to press 0 or hold C
+		g_exitKey = KEYPAD_getPressedKey(); // wait for the user to press 0 or hold C
 
-		if (exitKey == 'C')
+		if (g_exitKey == 'C')
 		{
 			LCD_clearScreen();
-			exitKey = 1;
+			g_exitKey = 1;
 			break;
 		}
-		else if (exitKey == 0)
+		else if (g_exitKey == 0)
 		{
 			LCD_clearScreen();
-			exitKey = 0;
+			g_exitKey = 0;
 			break;
 		}
 		_delay_ms(300);
 	}
-	return exitKey;
+	return g_exitKey;
 }
 
 /*
@@ -66,7 +66,7 @@ void menu(void)
 	{
 		ProgrammerMode();
 	}
-	exitKey = 1; /* to reset the exitKey */
+	g_exitKey = 1; /* to reset the exitKey */
 }
 
 /*
@@ -90,7 +90,7 @@ void NormalMode(void)
 	uint8 operationFlag = 0;
 	uint8 operation = 0;
 
-	while (exitKey != 0)
+	while (g_exitKey != 0)
 	{
 		// trun on cursor
 		LCD_sendCommand(LCD_CURSOR_ON);
@@ -107,7 +107,7 @@ void NormalMode(void)
 			{
 				num2 = num2 * 10 + key;
 			}
-			LCD_displayNumber(key);
+			LCD_displayInteger(key);
 		}
 		else if (key == '/' || key == '*' || key == '-' || key == '+')
 		{
@@ -136,15 +136,15 @@ void NormalMode(void)
 
 			LCD_Goto_XY(1, 0);
 			LCD_displayCharacter('=');
-			LCD_displayNumber(result);
+			LCD_displayInteger(result);
 			operationFlag = 0;
 			num1 = 0;
 			num2 = 0;
 			result = 0;
 
-			exitKey = ResetMenu();
+			g_exitKey = ResetMenu();
 		}
-		//else if (key == 'C') //TODO: delete characher
+		// else if (key == 'C') //TODO: delete characher
 		//{
 		//	if (operationFlag == 0)
 		//	{
@@ -156,7 +156,7 @@ void NormalMode(void)
 		//	}
 		//	LCD_sendCommand(LCD_DECREMENT_CURSOR);
 		//	LCD_displayCharacter(' ');
-		//}
+		// }
 
 		_delay_ms(300);
 	}
@@ -174,7 +174,7 @@ void ProgrammerMode(void)
 	uint8 num = 0;
 	LCD_sendCommand(LCD_GO_TO_HOME);
 
-	while (exitKey != 0)
+	while (g_exitKey != 0)
 	{
 		LCD_sendCommand(LCD_CURSOR_ON);
 		key = KEYPAD_getPressedKey();
@@ -182,7 +182,7 @@ void ProgrammerMode(void)
 		if (key >= 0 && key <= 9)
 		{
 			num = num * 10 + key;
-			LCD_displayNumber(key);
+			LCD_displayInteger(key);
 		}
 		else if (key == '=')
 		{
