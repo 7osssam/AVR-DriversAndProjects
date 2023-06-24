@@ -22,12 +22,13 @@
 				"-fno-exceptions",
 				"-fno-threadsafe-statics",
 				"-pipe",
-				"-mmcu=atmega32a",
-				"-DF_CPU=16000000UL"
+				"-mmcu=atmega32"
+				//"-DF_CPU=16000000UL"
+				// "F_CPU=16000000UL"
 			],
 			"defines": [
-				"__ATmega32A__",
-				"__AVR_ATmega32A__"
+				"__ATmega32__",
+				"__AVR_ATmega32__"
 			],
 			"browse": {
 				"path": [
