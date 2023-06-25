@@ -22,9 +22,9 @@
 				"-fno-exceptions",
 				"-fno-threadsafe-statics",
 				"-pipe",
-				"-mmcu=atmega32",
-				"-DF_CPU=16000000UL",
-				"F_CPU=16000000UL"
+				"-mmcu=atmega32"
+				//"-DF_CPU=1000000UL",
+				//"F_CPU=1000000UL"
 			],
 			"defines": [
 				"__ATmega32__",
