@@ -1,7 +1,10 @@
-#include "calculator.h"
+#include "Calculator.h"
 
 uint8 g_exitKey = 1; /* to exit the program */
 
+/**************************************************************************************************************
+ * 											 Private Functions												  *
+ * ************************************************************************************************************/
 /*
  * Description: This private function is responsible for displaying the reset menu on most right side of the LCD
  * Inputs: void
@@ -39,42 +42,11 @@ static uint8 ResetMenu(void)
 }
 
 /*
- * Description: This function is responsible for displaying the main menu on the LCD
- * and wait for the user to press 1 or 2 to choose the calculator mode (Normal or Programmer)
- * Inputs: void
- * Output: void
- */
-void menu(void)
-{
-	uint8 option; /* to store the pressed key number */
-
-	LCD_displayStringRowColumn(0, 0, "1-Normal");
-	LCD_displayStringRowColumn(1, 0, "2-Programmer");
-
-	option = KEYPAD_getPressedKey(); /* get the pressed key number */
-
-	_delay_ms(500); /* Press time */
-
-	LCD_clearScreen(); /* clear LCD at the beginning */
-	// LCD_sendCommand(LCD_GO_TO_HOME); /* Go to home position */
-
-	if (option == 1)
-	{
-		NormalMode();
-	}
-	else if (option == 2)
-	{
-		ProgrammerMode();
-	}
-	g_exitKey = 1; /* to reset the exitKey */
-}
-
-/*
  * Description: This function is responsible for the normal mode of the calculator (+ - * /)
  * Inputs: void
  * Output: void
  */
-void NormalMode(void)
+static void NormalMode(void)
 {
 	// NormalMode function
 	uint8 key = -1;
@@ -167,7 +139,7 @@ void NormalMode(void)
  * Inputs: void
  * Output: void
  */
-void ProgrammerMode(void)
+static void ProgrammerMode(void)
 {
 	// NormalMode function
 	uint8 key = -1;
@@ -202,5 +174,50 @@ void ProgrammerMode(void)
 			num = 0;
 		}
 		_delay_ms(300);
+	}
+}
+
+/*
+ * Description: This function is responsible for displaying the main menu on the LCD
+ * and wait for the user to press 1 or 2 to choose the calculator mode (Normal or Programmer)
+ * Inputs: void
+ * Output: void
+ */
+void CalculatorMenu(void)
+{
+	// INITIALIZATION
+
+	LCD_init();
+
+	LCD_displayStringCenter(1, "CALCULATOR");
+	_delay_ms(100);
+	LCD_displayStringCenter(0, "2 Modes");
+
+	_delay_ms(500);
+	LCD_clearScreen(); /* clear LCD at the beginning */
+
+	while (1) // Super Loop
+	{
+		uint8 option; /* to store the pressed key number */
+
+		LCD_displayStringRowColumn(0, 0, "1-Normal");
+		LCD_displayStringRowColumn(1, 0, "2-Programmer");
+
+		option = KEYPAD_getPressedKey(); /* get the pressed key number */
+
+		_delay_ms(500); /* Press time */
+
+		LCD_clearScreen(); /* clear LCD at the beginning */
+		// LCD_sendCommand(LCD_GO_TO_HOME); /* Go to home position */
+
+		if (option == 1)
+		{
+			NormalMode();
+		}
+		else if (option == 2)
+		{
+			ProgrammerMode();
+		}
+		g_exitKey = 1; /* to reset the exitKey */
 	}
 }
