@@ -25,6 +25,9 @@ void DCMOTOR_Init(void)
 
 void DCMOTOR_Rotate(DCMOTOR_State_t state, uint8 speed)
 {
+	uint8 duty_cycle = (speed * 255) / 100;
+
+	TIMER0_PWM_init(duty_cycle);
 	switch (state)
 	{
 	case DCMOTOR_STOP:
@@ -40,5 +43,4 @@ void DCMOTOR_Rotate(DCMOTOR_State_t state, uint8 speed)
 		GPIO_writePin(DCMOTOR_PORT, DCMOTOR_PIN_2, LOGIC_HIGH);
 		break;
 	}
-	TIMER0_PWM_init(speed);
 }
