@@ -9,9 +9,9 @@
  * Author: Hossam Mohamed
  *
  *******************************************************************************/
-
 #include "EXT_Interrupt.h"
-
+#include "BIT_MACROS.h"
+#include <avr/interrupt.h>
 /* Global variables to hold the address of the call back function in the application */
 static volatile void (*g_INT0_callBackPtr)(void) = NULL_PTR;
 static volatile void (*g_INT1_callBackPtr)(void) = NULL_PTR;
