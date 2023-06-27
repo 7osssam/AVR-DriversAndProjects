@@ -1,4 +1,3 @@
-
 /******************************************************************************
  *
  * Module: External Interrupt
@@ -14,9 +13,7 @@
 #ifndef EXT_INTERRUPT_H_
 #define EXT_INTERRUPT_H_
 
-#include "BIT_MACROS.h"
 #include "STD_TYPES.h"
-#include <avr/interrupt.h>
 #include <avr/io.h>
 
 /*******************************************************************************
@@ -27,7 +24,7 @@ typedef enum
 	EX_INT0,
 	EX_INT1,
 	EX_INT2
-} Interrupt;
+} EXT_Interrupt;
 
 typedef enum
 {
@@ -35,15 +32,15 @@ typedef enum
 	any_logical_change,
 	falling_edge,
 	rising_edge
-} State;
+} EXT_State;
 
 /*******************************************************************************
  * 								Configuration structure                        *
  * *****************************************************************************/
 typedef struct
 {
-	Interrupt interrupt; // EX_INT0, EX_INT1, EX_INT2
-	State sense_control; // low_level, any_logical_change, falling_edge, rising_edge
+	EXT_Interrupt interrupt; // EX_INT0, EX_INT1, EX_INT2
+	EXT_State sense_control; // low_level, any_logical_change, falling_edge, rising_edge
 } Interrupt_ConfigType;
 
 /*******************************************************************************
