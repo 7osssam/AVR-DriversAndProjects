@@ -37,7 +37,7 @@ typedef unsigned long 		uint32;	   			/*           0 .. 4294967295       */
 typedef signed long 		sint32;		   		/* -2147483648 .. +2147483647      */
 typedef unsigned long long	uint64;				/*      	 0 .. 18446744073709551615  */
 typedef signed long long 	sint64;    /* -9223372036854775808 .. 9223372036854775807 */
-typedef float 				float32;
-typedef double 				float64;
+typedef float 				float32;			   /* -3.4E+38 .. +3.4E+38 */
+typedef double 				float64; 			  /* -1.7E+308 .. +1.7E+308 */
 
 #endif /* STD_TYPE_H_ */
