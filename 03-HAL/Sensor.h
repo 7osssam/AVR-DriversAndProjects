@@ -7,9 +7,9 @@
 /******************************************************************************
  *                                LM35 Definitions                            *
  * ****************************************************************************/
-#define LM35_CH 				0
-#define LM35_MAX_TEMPERATURE 	150
-#define LM35_MAX_VOLT 			1.5
+#define LM35_CH 2				 /* Channel of the ADC to which the sensor is connected */
+#define LM35_MAX_TEMPERATURE 150 /* Maximum temperature that can be measured by the sensor */
+#define LM35_MAX_VOLT 1.5		 /* the voltage of the sensor at the maximum temperature */
 
 /******************************************************************************
  *                                Functions Prototypes                        *
