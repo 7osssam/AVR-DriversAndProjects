@@ -1,4 +1,3 @@
-
 /******************************************************************************
  *
  * Module: ADC
@@ -12,17 +11,12 @@
  *******************************************************************************/
 #include "ADC.h"
 #include "BIT_MACROS.h"
-#include "avr/io.h" /* To use the IO Ports Registers */
-
-#ifdef ADC_INTERRUPT_MODE
-	#include <avr/interrupt.h> /* For ADC ISR */
-#endif
+#include "avr/io.h"		   /* To use the IO Ports Registers */
+#include <avr/interrupt.h> /* For ADC ISR */
 /*******************************************************************************
  *                          Global Variables                                   *
  *******************************************************************************/
-#ifdef ADC_INTERRUPT_MODE
 volatile uint16 g_ADC_result = 0;
-#endif
 /*******************************************************************************
  *                          Functions Definitions                              *
  *******************************************************************************/
@@ -30,25 +24,25 @@ volatile uint16 g_ADC_result = 0;
 /*******************************************************************************
  * @fn              - ADC_init
  * @brief           - This function is used to initialize the ADC driver
- * @param[in]       - ADC_ReferenceVoltage_t ref_volt
- * @param[in]       - ADC_Prescaler_t prescaler
+ * @param[in]       - ADC_ConfigType *config_ptr (Struct members are ref_volt, prescaler)
  * @return          - void
- * @note            - none
  *******************************************************************************/
 void ADC_init(ADC_ConfigType *config_ptr)
 {
 	// ADMUX | Voltage Reference Selections for ADC
 	switch (config_ptr->ref_volt)
 	{
-	case ADC_AREF:
+	case ADC_AREF: /* AREF, Internal Vref turned off */
 		CLEAR_BIT(ADMUX, REFS0);
 		CLEAR_BIT(ADMUX, REFS1);
 		break;
-	case ADC_AVCC:
+
+	case ADC_AVCC: /* AVCC with external capacitor at AREF pin */
 		SET_BIT(ADMUX, REFS0);
 		CLEAR_BIT(ADMUX, REFS1);
 		break;
-	case ADC_INTERNAL:
+
+	case ADC_INTERNAL: /* Internal 2.56V Voltage Reference with external capacitor at AREF pin */
 		SET_BIT(ADMUX, REFS0);
 		SET_BIT(ADMUX, REFS1);
 		break;
@@ -73,38 +67,20 @@ void ADC_init(ADC_ConfigType *config_ptr)
 }
 
 #ifdef ADC_INTERRUPT_MODE
-
 /* ADC Interrupt Service Routine executed when ADC conversion completes */
 ISR(ADC_vect)
 {
 	g_ADC_result = ADC; /* Read ADC Data after conversion complete */
 }
+#endif
 
 /*******************************************************************************
  * @fn              - ADC_readChannel
- * @brief           - This function is used to read the ADC channel in interrupt mode
+ * @brief           - This function is used to read the ADC channel
  * @param[in]       - uint8 channel_num
  * @return          - void
- * @note            - none
  *******************************************************************************/
-void ADC_readChannel_INTERRUPT(uint8 channel_num)
-{
-	// insert channel num 00000111
-	ADMUX = (ADMUX & 0xE0) | (0x07 & channel_num); /* Input channel number must be from 0 --> 7 */
-
-	// start conversion
-	SET_BIT(ADCSRA, ADSC);
-}
-
-#else
-/*******************************************************************************
- * @fn              - ADC_readChannel
- * @brief           - This function is used to read the ADC channel in polling mode
- * @param[in]       - uint8 channel_num
- * @return          - uint16
- * @note            - none
- *******************************************************************************/
-uint16 ADC_readChannel(uint8 channel_num)
+void ADC_readChannel(uint8 channel_num)
 {
 	// insert channel num 00000111
 	ADMUX = (ADMUX & 0xE0) | (0x07 & channel_num); /* Input channel number must be from 0 --> 7 */
@@ -112,6 +88,7 @@ uint16 ADC_readChannel(uint8 channel_num)
 	// start conversion
 	SET_BIT(ADCSRA, ADSC);
 
+#ifndef ADC_INTERRUPT_MODE
 	// polling until flag ADCIF == 1
 	while (IS_BIT_CLEAR(ADCSRA, ADIF))
 		;
@@ -119,8 +96,7 @@ uint16 ADC_readChannel(uint8 channel_num)
 	// clear flag
 	SET_BIT(ADCSRA, ADIF);
 
-	// return date
-	return ADC;
-}
-
+	// get data
+	g_ADC_result = ADC;
 #endif
+}
