@@ -36,7 +36,7 @@ static uint8 KEYPAD_4x4[KEYPAD_NUM_ROWS][KEYPAD_NUM_COLS] = {
 #endif	   /* STANDARD_KEYPAD */
 
 /*******************************************************************************
- *                      Functions Definitions                                  *
+ *                      Functions Definitions                                  **
  *******************************************************************************/
 
 uint8 KEYPAD_getPressedKey(void)
