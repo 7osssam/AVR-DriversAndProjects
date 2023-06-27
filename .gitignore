@@ -5,6 +5,7 @@
 # Proteus Temp Files
 *.pdsprj
 *.Hossam.workspace
+*.pdsbak
 
 # Prerequisites
 *.d
