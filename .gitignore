@@ -1,5 +1,10 @@
 
+# Project Files
 .vscode/cppcheck_misra
+
+# Proteus Temp Files
+*.pdsprj
+*.Hossam.workspace
 
 # Prerequisites
 *.d
