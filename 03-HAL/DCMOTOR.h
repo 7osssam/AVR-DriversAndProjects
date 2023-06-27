@@ -19,10 +19,10 @@
 #include <avr/io.h>
 /*********************** Configuration Macros ************************************/
 
-#define DCMOTOR_PORT PORTB_ID
+#define DCMOTOR_PORT 		PORTB_ID
 
-#define DCMOTOR_PIN_1 PIN0_ID
-#define DCMOTOR_PIN_2 PIN1_ID
+#define DCMOTOR_PIN_1 		PIN0_ID
+#define DCMOTOR_PIN_2 		PIN1_ID
 
 /********************** Data Types Definition ***********************************/
 
@@ -41,6 +41,7 @@ typedef enum
  * @return void
  *******************************************************************************/
 void DCMOTOR_Init(void);
+
 /*******************************************************************************
  * Description: Function to rotate the DC Motor
  * @param state
