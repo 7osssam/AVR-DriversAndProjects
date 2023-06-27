@@ -10,8 +10,8 @@
  *
  *******************************************************************************/
 
-#include "GPIO.h"		/* To include the GPIO header file */
-#include "BIT_MACROS.h" /* To use the macros like SET_BIT */
+#include "GPIO.h" /* To include the GPIO header file */
+#include "BIT_MACROS.h"
 
 #include "avr/io.h" /* To use the IO Ports Registers */
 
