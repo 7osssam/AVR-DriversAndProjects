@@ -3,7 +3,6 @@
 .vscode/cppcheck_misra
 
 # Proteus Temp Files
-*.pdsprj
 *.Hossam.workspace
 *.pdsbak
 
