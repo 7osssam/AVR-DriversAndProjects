@@ -1,3 +1,15 @@
+/******************************************************************************
+ *
+ * Module: Sensor
+ *
+ * File Name: Sensor.h
+ *
+ * Description: Header file for the Sensor driver
+ * 				- LM35 Sensor
+ *
+ * Author: Hossam Mohamed
+ *
+ *******************************************************************************/
 #ifndef SENSOR_H_
 #define SENSOR_H_
 
