@@ -34,14 +34,14 @@
 #endif
 
 /* LCD RS pin configuration */
-#define LCD_RS_PORT_ID 				PORTD_ID
+#define LCD_RS_PORT_ID 				PORTB_ID
 #define LCD_RS_PIN_ID 				PIN0_ID
 
 /* LCD E pin configuration */
-#define LCD_E_PORT_ID 				PORTD_ID
+#define LCD_E_PORT_ID 				PORTB_ID
 #define LCD_E_PIN_ID 				PIN2_ID
 
-#define LCD_DATA_PORT_ID 			PORTC_ID
+#define LCD_DATA_PORT_ID 			PORTA_ID
 
 #if (LCD_DATA_BITS_MODE == _4_BIT_MODE)
 
