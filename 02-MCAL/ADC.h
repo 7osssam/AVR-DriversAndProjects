@@ -23,7 +23,6 @@
 /* static configuration for ADC driver */
 #define ADC_INTERRUPT_MODE /* Comment this line if you want polling mode */
 #undef ADC_INTERRUPT_MODE
-
 /*******************************************************************************
  *                              Module Data Types                              *
  *******************************************************************************/
