@@ -222,10 +222,6 @@ uint8 UART_ReceiveByteCheck(uint8 *ptr_data)
 		*ptr_data = UDR;
 		status = TRUE;
 	}
-	else
-	{
-		status = FALSE;
-	}
 	return status;
 }
 

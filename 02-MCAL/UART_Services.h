@@ -16,8 +16,37 @@
 #include "UART.h"
 
 /*************************************************************************************************************
+ *   									      Static configurations										 	 *
+ * ***********************************************************************************************************/
+#define STACK_SIZE 10
+
+/*************************************************************************************************************
+ *   										User defined data types										 	 *
+ * ***********************************************************************************************************/
+typedef enum
+{
+	STACK_EMPTY, // 0
+	STACK_FULL,	 // 1
+	DONE		 // 2
+} Stack_Status_Type;
+
+/*************************************************************************************************************
  *   										Functions Prototypes										 	 *
  * ***********************************************************************************************************/
+
+/*
+ * Description : Push the required data to the stack.
+ * arguments   : uint8 a_data : data to be pushed
+ * Return      : Stack_Status_Type : status of the stack
+ */
+Stack_Status_Type UART_PUSH(uint8 a_data);
+
+/*
+ * Description : Pop the required data from the stack.
+ * arguments   : uint8 *Ptr_data : pointer to the variable to store the popped data
+ * Return      : Stack_Status_Type : status of the stack
+ */
+Stack_Status_Type UART_POP(uint8 *Ptr_data);
 
 /*
  * Description : Send the required string through UART to the other UART device.
