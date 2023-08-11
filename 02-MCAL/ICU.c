@@ -12,9 +12,9 @@
 
 #include "ICU.h"
 #include "BIT_MACROS.h"
+
 #include <avr/interrupt.h> /* For ICU ISR */
 #include <avr/io.h>		   /* To use ICU/Timer1 Registers */
-
 /*******************************************************************************
  *                           Global Variables                                  *
  *******************************************************************************/
@@ -49,20 +49,22 @@ void ICU_init(const ICU_ConfigType *Config_Ptr)
 
 	/* Timer1 always operates in Normal Mode */
 	/* FOC1A/B = 1 when WGM1[1:0] = 00 to force compare match and non-PWM mode */
-	SET_BIT_S(TCCR1A, BIT(FOC1A) | BIT(FOC1B));
+	SET_BIT_S(TCCR1A, BIT(FOC1A) | BIT(FOC1B)); //!
 
 	/*
 	 * insert the required clock value in the first three bits (CS10, CS11 and CS12)
 	 * of TCCR1B Register
 	 * 0xF8 to make the last 5 bits = 0b11111000
 	 */
-	TCCR1B = (TCCR1B & 0xF8) | (Config_Ptr->clock);
+	Timer1_ConfigType ICU_Config = {0, 0, TIMER1_NORMAL_MODE, Config_Ptr->clock, OCRA_DISCONNECTED, OCRB_DISCONNECTED};
+	Timer1_init(&ICU_Config);
 
 	/*
 	 * insert the required edge type in ICES1 bit in TCCR1B Register
 	 * 1 for rising edge and 0 for falling edge on ICP1/PD6 pin
 	 * 0xBF to make the 6th bit = 0b10111111
 	 */
+
 	TCCR1B = (TCCR1B & 0xBF) | ((Config_Ptr->edge) << PD6);
 
 	/* Initial Value for Timer1 */

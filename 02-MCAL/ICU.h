@@ -13,20 +13,10 @@
 #define ICU_H_
 
 #include "STD_TYPES.h"
-
+#include "timer.h"
 /*******************************************************************************
  *                         Types Declaration                                   *
  *******************************************************************************/
-typedef enum
-{
-	NO_CLOCK,	 /* No clock Source */
-	F_CPU_CLOCK, /* System Clock Source */
-	F_CPU_8,	 /* System Clock Source divided by 8 */
-	F_CPU_64,	 /* System Clock Source divided by 64 */
-	F_CPU_256,	 /* System Clock Source divided by 256 */
-	F_CPU_1024	 /* System Clock Source divided by 1024 */
-} ICU_ClockType;
-
 typedef enum
 {
 	FALLING,
@@ -36,7 +26,7 @@ typedef enum
 
 typedef struct
 {
-	ICU_ClockType clock;
+	Prescaler_type clock;
 	ICU_EdgeType edge;
 } ICU_ConfigType;
 
