@@ -70,6 +70,7 @@ void ADC_init(ADC_ConfigType *config_struct);
  * @brief           - This function is used to read the ADC channel
  * @param[in]       - uint8 channel_num
  * @return          - void
+ * Note: The result is stored in the global variable g_ADC_result
  *******************************************************************************/
 void ADC_readChannel(uint8 channel_num);
 
