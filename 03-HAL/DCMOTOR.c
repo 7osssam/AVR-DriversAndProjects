@@ -10,7 +10,7 @@
  *
  *******************************************************************************/
 #include "DCMOTOR.h"
-#include "Timer.h"
+#include "TIMER.h"
 
 void DCMOTOR_Init(void)
 {
@@ -27,7 +27,11 @@ void DCMOTOR_Rotate(DCMOTOR_State_t state, uint8 speed)
 {
 	uint8 duty_cycle = (speed * 255) / 100;
 
-	TIMER0_PWM_init(duty_cycle);
+	Timer0_ConfigType PWM_config = {duty_cycle, TIMER0_FASTPWM_MODE, F_CPU_8, OC0_INVERTING};
+
+	Timer0_init(&PWM_config);
+
+	GPIO_setupPinDirection(PWM_pin_PORT_ID, PWM_pin_PIN_ID, PIN_OUTPUT);
 	switch (state)
 	{
 	case DCMOTOR_STOP:

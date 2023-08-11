@@ -24,6 +24,8 @@
 #define DCMOTOR_PIN_1 		PIN0_ID
 #define DCMOTOR_PIN_2 		PIN1_ID
 
+#define PWM_pin_PORT_ID 	PORTB_ID
+#define PWM_pin_PIN_ID 		PIN3_ID
 /********************** Data Types Definition ***********************************/
 
 typedef enum
