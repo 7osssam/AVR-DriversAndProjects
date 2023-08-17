@@ -13,8 +13,6 @@
 #ifndef TWI_H_
 #define TWI_H_
 
-#include "BIT_MACROS.h"
-#include "SETTINGS.h"
 #include "STD_TYPES.h"
 
 /*******************************************************************************
