@@ -46,4 +46,22 @@ ErrorStatus_t EEPROM_writeByte(uint16 u16address, uint8 u8data);
  * Output      : ErrorStatus_t
  */
 ErrorStatus_t EEPROM_readByte(uint16 u16address, uint8 *u8data);
+
+/*
+ * Description : Function to write a page in the external EEPROM
+ * Input       : - u16address -> the address of the location to write in
+ * 				 - u8data -> pointer to the data to write
+ * 				 - u8length -> the length of the data to write
+ * Output      : ErrorStatus_t
+ */
+ErrorStatus_t EEPROM_writePage(uint16 u16address, uint8 *u8data, uint8 u8length);
+
+/*
+ * Description : Function to read a page from the external EEPROM
+ * Input       : - u16address -> the address of the location to read from
+ * 				 - u8data -> pointer to the variable that will hold the read data
+ * 				 - u8length -> the length of the data to read
+ * Output      : ErrorStatus_t
+ */
+ErrorStatus_t EEPROM_readPage(uint16 u16address, uint8 *u8data, uint8 u8length);
 #endif // _EEPROM_H_
