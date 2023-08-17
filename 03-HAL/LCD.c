@@ -30,49 +30,49 @@
  * str : the array that will store the string
  * static : because this function is only used in this file
  */
-static void intToSting(int num, unsigned char *str) // convert int to string
-{
-	int i = 0;			// index
-	int isNegative = 0; // flag
+// static void intToSting(int num, unsigned char *str) // convert int to string
+//{
+//	int i = 0;			// index
+//	int isNegative = 0; // flag
 
-	if (num < 0) // if the number is negative
-	{
-		isNegative = 1; // set the flag
-		num = num * -1; // make the number positive
-	}
+//	if (num < 0) // if the number is negative
+//	{
+//		isNegative = 1; // set the flag
+//		num = num * -1; // make the number positive
+//	}
 
-	do // we use do while to make sure that the loop will run at least once even if the number is 0
-	{
-		int mod = num % 10;	  // get the remainder
-		str[i++] = mod + '0'; // convert the remainder to char and put it in the array and increment the index
+//	do // we use do while to make sure that the loop will run at least once even if the number is 0
+//	{
+//		int mod = num % 10;	  // get the remainder
+//		str[i++] = mod + '0'; // convert the remainder to char and put it in the array and increment the index
 
-		num = num / 10; // update the number (remove the last digit)
+//		num = num / 10; // update the number (remove the last digit)
 
-	} while (num > 0); // num is positive
+//	} while (num > 0); // num is positive
 
-	if (isNegative) // if the number is negative
-	{
-		str[i++] = '-'; // put the negative sign at the end of the string and increment the index
-	}
-	str[i] = 0; //! null at the end
+//	if (isNegative) // if the number is negative
+//	{
+//		str[i++] = '-'; // put the negative sign at the end of the string and increment the index
+//	}
+//	str[i] = 0; //! null at the end
 
-	/*
-	 the array of this number is reversed
-	 so we need to reverse it (we can use the function we made before)
-	 but this is better because we didn't stringlength function,
-	 we already have the index of the last char in the array (i)
-	! but note that i is the index of the null char so we need to decrement it by 1
-	*/
+//	/*
+//	 the array of this number is reversed
+//	 so we need to reverse it (we can use the function we made before)
+//	 but this is better because we didn't stringlength function,
+//	 we already have the index of the last char in the array (i)
+//	! but note that i is the index of the null char so we need to decrement it by 1
+//	*/
 
-	i--; // decrement i by 1
+//	i--; // decrement i by 1
 
-	for (int k = 0; k <= i / 2; k++) // don't forget = in <= (if the number is 2 digits)
-	{
-		char temp = str[k];
-		str[k] = str[i - k];
-		str[i - k] = temp;
-	}
-}
+//	for (int k = 0; k <= i / 2; k++) // don't forget = in <= (if the number is 2 digits)
+//	{
+//		char temp = str[k];
+//		str[k] = str[i - k];
+//		str[i - k] = temp;
+//	}
+//}
 
 /*******************************************************************************
  *                      Functions Definitions                                  *
@@ -165,7 +165,7 @@ void LCD_sendCommand(uint8 command)
  */
 void LCD_Goto_XY(uint8 row, uint8 col)
 {
-	uint8 lcd_memory_address;
+	uint8 lcd_memory_address = 0;
 
 	/* Calculate the required address in the LCD DDRAM */
 	switch (row)
