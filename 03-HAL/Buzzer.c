@@ -12,6 +12,9 @@
 
 #include "Buzzer.h"
 
+#include "SETTINGS.h"
+#include <util/delay.h>
+
 void Buzzer_init()
 {
 	// Set the direction of the Buzzer pin to be output pin
@@ -27,4 +30,18 @@ void Buzzer_on()
 void Buzzer_off()
 {
 	GPIO_writePin(BUZZER_PORT, BUZZER_PIN, LOGIC_LOW);
+}
+
+void Buzzer_Alarm(void)
+{
+	// Generate alarm sound pattern
+	for (int i = 0; i < 3; i++)
+	{
+		Buzzer_on();
+		_delay_ms(100);
+		Buzzer_off();
+		_delay_ms(100);
+	}
+
+	_delay_ms(1000); // Pause between alarm patterns
 }
