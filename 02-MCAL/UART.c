@@ -35,7 +35,7 @@ volatile uint8 receivedByte; // Global variable to store the received byte
 //	 {{207, 103, 51, 34, 25, 16, 0}, {416, 207, 103, 68, 51, 34, 8}, {832, 416, 207, 138, 103, 68, 16}}};
 
 /******************************************* initialization  *********************************************/
-void UART_init(uint32 a_baud_rate)
+void UART_init(UART_ConfigType *a_config_ptr)
 {
 
 	volatile uint8 UCSRC_var = 0; // write UCSRC settings in one step then write it to UCSRC register
@@ -48,9 +48,6 @@ void UART_init(uint32 a_baud_rate)
 	SET_BIT(UCSRA, U2X);
 #endif
 
-	//****************** Set URSEL to access UCSRC register *********************/
-	SET_BIT(UCSRC_var, URSEL);
-
 	//********************* Communication mode *******************************/
 #if (SYNCH_MODE == SYNCH)
 	SET_BIT(UCSRC_var, UMSEL)
@@ -59,61 +56,31 @@ void UART_init(uint32 a_baud_rate)
 #endif
 
 	//**************************** Parity bits *******************************/
-#if (PARITY_MODE == NO_PARITY)
-	CLEAR_BIT(UCSRC_var, UPM0);
-	CLEAR_BIT(UCSRC_var, UPM1);
-#elif (PARITY_MODE == EVEN_PARITY)
-	CLEAR_BIT(UCSRC_var, UPM0);
-	SET_BIT(UCSRC_var, UPM1);
-#elif (PARITY_MODE == ODD_PARITY)
-	SET_BIT(UCSRC_var, UPM0);
-	SET_BIT(UCSRC_var, UPM1);
-#endif
+	UCSRC_var = (UCSRC_var & 0xCF) | ((a_config_ptr->parity) << 4);
 
 	//*********************** Number of data bits *******************************/
-#if (N_DATA_BITS == _5_DATA_BITS)
-	CLEAR_BIT(UCSRC_var, UCSZ0);
-	CLEAR_BIT(UCSRC_var, UCSZ1);
-	CLEAR_BIT(UCSRC_var, UCSZ2);
-#elif (N_DATA_BITS == _6_DATA_BITS)
-	SET_BIT(UCSRC_var, UCSZ0);
-	CLEAR_BIT(UCSRC_var, UCSZ1);
-	CLEAR_BIT(UCSRC_var, UCSZ2);
-#elif (N_DATA_BITS == _7_DATA_BITS)
-	CLEAR_BIT(UCSRC_var, UCSZ0);
-	SET_BIT(UCSRC_var, UCSZ1);
-	CLEAR_BIT(UCSRB, UCSZ2);
-#elif (N_DATA_BITS == _8_DATA_BITS)
-	SET_BIT(UCSRC_var, UCSZ0);
-	SET_BIT(UCSRC_var, UCSZ1);
-	CLEAR_BIT(UCSRB, UCSZ2);
-#elif (N_DATA_BITS == _9_DATA_BITS)
-	SET_BIT(UCSRC_var, UCSZ0);
-	SET_BIT(UCSRC_var, UCSZ1);
-	SET_BIT(UCSRB, UCSZ2);
-#endif
+	UCSRC_var = (UCSRC_var & 0xF9) | ((a_config_ptr->bit_data) << 1);
+	if (a_config_ptr->bit_data == UART_9_BIT_DATA)
+		SET_BIT(UCSRB, UCSZ2);
 
 	//*********************** Number of stop bits *******************************/
-#if (N_STOP_BITS == ONE_STOP_BIT)
-	CLEAR_BIT(UCSRC_var, USBS);
-#elif (N_STOP_BITS == TWO_STOP_BIT)
-	SET_BIT(UCSRC_var, USBS);
-#endif
+	UCSRC_var = (UCSRC_var & 0xF7) | ((a_config_ptr->stop_bit) << 3);
+
+	//****************** Set URSEL to access UCSRC register *********************/
+	SET_BIT(UCSRC, URSEL);
 
 	//***************** Write UCSRC register *******************************/
 	UCSRC = UCSRC_var;
 
-	//************************Baud rate *******************************/
-	// UBRR_var = BaudRateArray[SPEED_MODE][CPU_F][BUAD_RATE];
-
+	//************************ Set baud rate *******************************/
 #if (SYNCH_MODE == ASYNCH)
 	#if (SPEED_MODE == NORMAL_SPEED)
-	UBRR_var = BAUD_RATE_ASYNC_NORMAL(a_baud_rate)
+	UBRR_var = BAUD_RATE_ASYNC_NORMAL(a_config_ptr->baud_rate)
 	#elif (SPEED_MODE == DOUBLE_SPEED)
-	UBRR_var = BAUD_RATE_ASYNC_DOUBLE(a_baud_rate);
+	UBRR_var = (uint16)BAUD_RATE_ASYNC_DOUBLE(a_config_ptr->baud_rate);
 	#endif
 #elif (SYNCH_MODE == SYNCH)
-	UBRR_var = BAUD_RATE_SYNC_MASTER(a_baud_rate);
+	UBRR_var = BAUD_RATE_SYNC_MASTER(a_config_ptr->baud_rate);
 #endif
 
 		UBRRH = (uint8)(UBRR_var >> 8);
@@ -204,14 +171,15 @@ uint8 UART_ReceiveByte(void)
 	 * DOR: Data OverRun
 	 * PE: Parity Error
 	 *******************************************************************/
-	if (IS_BIT_SET(UCSRA, FE) || IS_BIT_SET(UCSRA, DOR) || IS_BIT_SET(UCSRA, PE))
-	{
-		return 0; // return 0 if there is error in receiving
-	}
-	else
-	{
-		return UDR;
-	}
+	// if (IS_BIT_SET(UCSRA, FE) || IS_BIT_SET(UCSRA, DOR) || IS_BIT_SET(UCSRA, PE))
+	//{
+	//	return 0; // return 0 if there is error in receiving
+	// }
+	// else
+	//{
+	//	return UDR;
+	// }
+	return UDR;
 }
 
 uint8 UART_ReceiveByteCheck(uint8 *ptr_data)
