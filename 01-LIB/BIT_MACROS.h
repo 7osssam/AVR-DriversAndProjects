@@ -32,7 +32,7 @@
 #define WRITE_BIT(reg, bit, value)  	(reg = ((reg & ~(1U << (bit))) | ((value) << (bit))))
 
 /* Set multiple bits based on mask */
-#define SET_BIT_S(reg, mask) 			(reg |= (mask))
+#define SET_BIT_S(reg, mask) 			((reg) |= (mask))
 
 /* Clear multiple bits based on mask */
 #define CLEAR_BIT_S(reg, mask) 			(reg &= ~(mask))
