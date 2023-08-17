@@ -20,6 +20,10 @@
  * 												Timer 0													*
  ********************************************************************************************************/
 
+//======================================== Timer0 Registers ==========================================
+#define PWM_pin_PORT_ID 		PORTB_ID
+#define PWM_pin_PIN_ID 			PIN3_ID
+
 //======================================== Clock Select =============================================
 typedef enum
 {
@@ -103,8 +107,8 @@ typedef enum
 	TIMER1_PWM_PHASE_CORRECT_OCR1A_MODE,	  // TOP = OCR1A
 	TIMER1_CTC_ICR_TOP_MODE,				  // TOP = ICR1
 	// TIMER1_RESERVED,						  // Reserved
-	TIMER1_FASTPWM_ICR_TOP_MODE,  // TOP = ICR1
-	TIMER1_FASTPWM_OCRA_TOP_MODE, // TOP = OCR1A
+	TIMER1_FASTPWM_ICR_TOP_MODE = 14, 		  // TOP = ICR1
+	TIMER1_FASTPWM_OCRA_TOP_MODE,	          // TOP = OCR1A
 } Timer1Mode_type;
 
 //======================================== Compare Output Modes (OC1A) =====================================
