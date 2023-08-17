@@ -98,6 +98,7 @@ void Timer0_init(const Timer0_ConfigType *Config_Ptr)
 	//*********************************************** Initial Value ************************************************/
 	if (Config_Ptr->mode == TIMER0_FASTPWM_MODE || Config_Ptr->mode == TIMER0_PHASECORRECT_MODE)
 	{
+		TCNT0 = 0;
 		OCR0 = Config_Ptr->initial_value;
 	}
 	else
@@ -178,8 +179,8 @@ ISR(TIMER1_COMPB_vect)
 void Timer1_init(const Timer1_ConfigType *Config_Ptr)
 {
 	//*********************************************** Waveform Generation Modes ********************************/
-	TCCR1A = (TCCR1A & ~(BIT(WGM10) | BIT(WGM11))) | (Config_Ptr->mode & (BIT(WGM10) | BIT(WGM11)));
-	TCCR1B = (TCCR1B & ~(BIT(WGM12) | BIT(WGM13))) | (Config_Ptr->mode & (BIT(WGM12) | BIT(WGM13)));
+	TCCR1A = (TCCR1A & 0xFC) | ((Config_Ptr->mode) & 0x03);
+	TCCR1B = (TCCR1B & 0xE7) | (((Config_Ptr->mode) & 0x0C) << 1);
 
 	//******************************************** OC1A & OC1B Modes ********************************************//
 	switch (Config_Ptr->oc1a_mode)
@@ -228,11 +229,12 @@ void Timer1_init(const Timer1_ConfigType *Config_Ptr)
 	switch (Config_Ptr->mode)
 	{
 	case TIMER1_NORMAL_MODE:
+		TCNT1 = Config_Ptr->initial_value;
 	case TIMER1_CTC_OCR1A_MODE:
 	case TIMER1_CTC_ICR_TOP_MODE:
 		TCNT1 = Config_Ptr->initial_value;
+		OCR1A = Config_Ptr->compare_value;
 		break;
-
 	case TIMER1_PWM_8BIT_MODE:
 	case TIMER1_PWM_9BIT_MODE:
 	case TIMER1_PWM_10BIT_MODE:
