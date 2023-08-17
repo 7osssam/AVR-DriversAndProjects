@@ -23,9 +23,6 @@
 
 #define DCMOTOR_PIN_1 		PIN0_ID
 #define DCMOTOR_PIN_2 		PIN1_ID
-
-#define PWM_pin_PORT_ID 	PORTB_ID
-#define PWM_pin_PIN_ID 		PIN3_ID
 /********************** Data Types Definition ***********************************/
 
 typedef enum
@@ -38,11 +35,13 @@ typedef enum
 /*************************Functions Prototypes *********************************/
 
 /*******************************************************************************
- * Description: Function to initialize the DC Motor driver
+ * Description: Function to initialize the DC Motor driver by:
+ * 				- Set the direction of the GPIO pins connected to the DC Motor as output pins
+ * 				- Set the initial value of the GPIO pins connected to the DC Motor as low
  * @param void
  * @return void
  *******************************************************************************/
-void DCMOTOR_Init(void);
+void DCMOTOR_init(void);
 
 /*******************************************************************************
  * Description: Function to rotate the DC Motor
