@@ -13,7 +13,10 @@
 #ifndef TWI_H_
 #define TWI_H_
 
+#include "BIT_MACROS.h"
+#include "SETTINGS.h"
 #include "STD_TYPES.h"
+
 /*******************************************************************************
  *                      Preprocessor Macros                                    *
  *******************************************************************************/
@@ -40,29 +43,37 @@ typedef enum
 
 typedef enum
 {
-	Prescaler_1,
-	Prescaler_4,
-	Prescaler_16,
-	Prescaler_64
+	TWI_Prescaler_1,
+	TWI_Prescaler_4,
+	TWI_Prescaler_16,
+	TWI_Prescaler_64
 
 } TWI_Prescaler;
+
+typedef enum
+{
+	TWI_GeneralCallRecognitionEnable_OFF,
+	TWI_GeneralCallRecognitionEnable_ON
+} TWI_GENERAL_CALL_RECOGNITION_ENABLE_MODE;
 
 typedef struct
 {
 	SCL_Frquency SCL_Frq;
 	TWI_Prescaler prescaler;
-	uint8 slaveAddress;
-} TWI_ConfigType;
+	TWI_GENERAL_CALL_RECOGNITION_ENABLE_MODE generalCallRecognitionEnableModeConfig;
+	uint8 TWI_slaveAddress;
+} TWI_configType;
 
 /*******************************************************************************
  *                      Functions Prototypes                                   *
  *******************************************************************************/
-void TWI_init(const TWI_ConfigType *Config_Ptr);
+
+void TWI_init(const TWI_configType *Config_Ptr);
 void TWI_start(void);
 void TWI_stop(void);
+void TWI_writeByte(uint8 data);
+uint8 TWI_readByteWithACK(void);  // read with send Ack
+uint8 TWI_readByteWithNACK(void); // read without send Ack
 uint8 TWI_getStatus(void);
-void TWI_writeByte(uint8 a_data);
-uint8 TWI_readByteWithACK(void);
-uint8 TWI_readByteWithNACK(void);
 
 #endif /* TWI_H_ */
