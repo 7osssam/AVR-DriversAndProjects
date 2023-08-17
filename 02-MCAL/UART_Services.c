@@ -97,6 +97,16 @@ void UART_SendString_interrupt(uint8 *str)
 	UART_TX_InterruptEnable();
 }
 
+void UART_SendFourBytes(uint32 a_data)
+{
+	uint8 i;
+	for (i = 0; i < 4; i++)
+	{
+		UART_SendByte((uint8)(a_data >> (i * 8)));
+		//_delay_ms(10);
+	}
+}
+
 /**********************************************************************************************
  * 										 	Receive Functions								  *
  **********************************************************************************************/
@@ -147,4 +157,14 @@ void UART_ReceiveString_interrupt(uint8 *str)
 
 	// Enable Receive complete interrupt
 	UART_RX_InterruptEnable();
+}
+
+void UART_ReceiveFourBytes(uint32 *a_data)
+{
+	uint8 i;
+	for (i = 0; i < 4; i++)
+	{
+		*a_data |= (uint32)(UART_ReceiveByte() << (i * 8));
+		//_delay_ms(10);
+	}
 }

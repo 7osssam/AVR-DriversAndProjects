@@ -65,6 +65,13 @@ void UART_SendString(const uint8 *Str);
 void UART_SendString_interrupt(uint8 *str);
 
 /*
+ * Description : Send Four bytes through UART to the other UART device. (by sending each byte separately)
+ * arguments   : uint32 a_data : data to be sent
+ * Return      : None
+ */
+void UART_SendFourBytes(uint32 a_data);
+
+/*
  * Description : Receive the required string until the '#' symbol through UART from the other UART device.
  * arguments   : uint8 *Str : pointer to the string to store the received string
  * Return      : None
@@ -79,4 +86,11 @@ void UART_ReceiveString(uint8 *Str); // Receive until #
  * Note        : The string should be ended with '#' to be received correctly
  */
 void UART_ReceiveString_interrupt(uint8 *str);
+
+/*
+ * Description : Receive Four bytes through UART from the other UART device. (by receiving each byte separately)
+ * arguments   : uint32 *a_data : pointer to the variable to store the received data
+ * Return      : None
+ */
+void UART_ReceiveFourBytes(uint32 *a_data);
 #endif /* UART_SERVICES_H_ */
