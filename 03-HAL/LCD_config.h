@@ -25,7 +25,8 @@
 #define LCD_SECOND_LINE 			0x40
 
 /* LCD Data bits mode configuration, its value should be 4 or 8*/
-#define LCD_DATA_BITS_MODE 			_8_BIT_MODE
+//#define LCD_DATA_BITS_MODE 			_8_BIT_MODE
+#define LCD_DATA_BITS_MODE 			_4_BIT_MODE
 
 #if ((LCD_DATA_BITS_MODE != _4_BIT_MODE) && (LCD_DATA_BITS_MODE != _8_BIT_MODE))
 
@@ -34,11 +35,11 @@
 #endif
 
 /* LCD RS pin configuration */
-#define LCD_RS_PORT_ID 				PORTB_ID
-#define LCD_RS_PIN_ID 				PIN0_ID
+#define LCD_RS_PORT_ID 				PORTA_ID
+#define LCD_RS_PIN_ID 				PIN1_ID
 
 /* LCD E pin configuration */
-#define LCD_E_PORT_ID 				PORTB_ID
+#define LCD_E_PORT_ID 				PORTA_ID
 #define LCD_E_PIN_ID 				PIN2_ID
 
 #define LCD_DATA_PORT_ID 			PORTA_ID
