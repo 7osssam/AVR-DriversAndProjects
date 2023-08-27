@@ -14,11 +14,12 @@
 #define _EEPROM_H_
 
 #include "STD_TYPES.h"
-#include "TWI.h"
 
-#define EEPROM_ADDRESS 		(0xA0)
-#define WRITEMODE 			(0x00)
-#define READMODE 			(0x01)
+#define EEPROM_DEVICE_ADDRESS 	(0xA0)
+#define WRITEMODE 				(0x00)
+#define READMODE 				(0x01)
+
+#define EEPROM_SLAVE_ADDRESS 	(0x01)
 /*******************************************************************************
  *                      User Defined Types                                     *
  *******************************************************************************/
@@ -31,6 +32,15 @@ typedef enum
 /*******************************************************************************
  *                      Functions Prototypes                                   *
  *******************************************************************************/
+
+/*
+ * Description : Function to initialize the external EEPROM by initializing the I2C module inside the MC 
+				 with the required configuration structure to communicate with the EEPROM 
+ * Input       : void
+ * Output      : void
+ */
+void EEPROM_init(void);
+
 /*
  * Description : Function to write a byte in the external EEPROM
  * Input       : - u16address -> the address of the location to write in
