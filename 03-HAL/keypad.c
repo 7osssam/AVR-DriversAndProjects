@@ -28,9 +28,9 @@ static unit8 KEYPAD_4x3[KEYPAD_NUM_ROWS][KEYPAD_NUM_COLS] = {
 
 	#elif (KEYPAD_NUM_COLS == 4)
 static uint8 KEYPAD_4x4[KEYPAD_NUM_ROWS][KEYPAD_NUM_COLS] = {
-	{7, 8, 9, '/'},
-	{4, 5, 6, '*'},
-	{1, 2, 3, '-'},
+	{ 7 , 8,  9 , '/'},
+	{ 4 , 5,  6 , '*'},
+	{ 1 , 2,  3 , '-'},
 	{'C', 0, '=', '+'}};
 	#endif /* KEYPAD_NUM_COLS */
 #endif	   /* STANDARD_KEYPAD */
