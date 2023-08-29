@@ -46,5 +46,10 @@ void Buzzer_on();
  *******************************************************************************/
 void Buzzer_off();
 
-void alarm(void);
+/*******************************************************************************
+ * Description: Function responsible for make alarm sound pattern. 
+ * @param void
+ * @return void
+ *******************************************************************************/
+void Buzzer_Alarm(void);
 #endif /* BUZZER_H_ */
