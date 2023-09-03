@@ -32,13 +32,13 @@
 #define WRITE_BIT(reg, bit, value)  	(reg = ((reg & ~(1U << (bit))) | ((value) << (bit))))
 
 /* Set multiple bits based on mask */
-#define SET_BIT_S(reg, mask) 			((reg) |= (mask))
+#define SET_MASK(reg, mask) 			((reg) |= (mask))
 
 /* Clear multiple bits based on mask */
-#define CLEAR_BIT_S(reg, mask) 			(reg &= ~(mask))
+#define CLEAR_MASK(reg, mask) 			(reg &= ~(mask))
 
 /* Toggle multiple bits based on mask */
-#define TOGGLE_BIT_S(reg, mask) 		(reg ^= (mask))
+#define TOGGLE_MASK(reg, mask) 		(reg ^= (mask))
 
 /* Check if a bit is set to 1 and clear it */
 #define TEST_AND_CLEAR_BIT(reg, bit) 	(((reg) >> (bit)) & 1U) && CLEAR_BIT(reg, bit)
