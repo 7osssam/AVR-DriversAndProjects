@@ -49,7 +49,7 @@ void ICU_init(const ICU_ConfigType *Config_Ptr)
 
 	/* Timer1 always operates in Normal Mode */
 	/* FOC1A/B = 1 when WGM1[1:0] = 00 to force compare match and non-PWM mode */
-	SET_BIT_S(TCCR1A, BIT(FOC1A) | BIT(FOC1B)); //!
+	SET_MASK(TCCR1A, BIT(FOC1A) | BIT(FOC1B)); //!
 
 	/*
 	 * insert the required clock value in the first three bits (CS10, CS11 and CS12)
