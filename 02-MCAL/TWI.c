@@ -62,7 +62,7 @@ void TWI_start(void)
 	 * - clear the interrupt flag by setting (TWINT)
 	 * - Enable TWI Module (TWEN)
 	 */
-	// SET_BIT_S(TWCR, BIT(TWSTA) | BIT(TWINT) | BIT(TWEN));
+	// SET_MASK(TWCR, BIT(TWSTA) | BIT(TWINT) | BIT(TWEN));
 	TWCR = BIT(TWINT) | BIT(TWEN) | BIT(TWSTA);
 
 	/* Wait for TWINT flag set in TWCR Register (start bit is send successfully) */
@@ -84,7 +84,7 @@ void TWI_stop(void)
 	 * - clear the interrupt flag by setting (TWINT)
 	 * - Enable TWI Module (TWEN)
 	 */
-	// SET_BIT_S(TWCR, BIT(TWSTO) | BIT(TWINT) | BIT(TWEN));
+	// SET_MASK(TWCR, BIT(TWSTO) | BIT(TWINT) | BIT(TWEN));
 
 	TWCR = BIT(TWINT) | BIT(TWEN) | BIT(TWSTO);
 }
