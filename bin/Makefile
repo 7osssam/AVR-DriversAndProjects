@@ -1,4 +1,4 @@
-# wykys Makefile for AVR
+#  Makefile for AVR
 
 ifndef NAME
 NAME = PRJ
@@ -15,7 +15,7 @@ MCU = atmega32
 CC = avr-gcc -fdiagnostics-color=always
 COMMON_FLAGS = -mmcu=$(MCU) -Wall
 C_STANDARD = c99
-OPTIMIZATION_LEVEL = O1
+OPTIMIZATION_LEVEL = O3
 CFLAGS = $(COMMON_FLAGS) -std=$(C_STANDARD) -$(OPTIMIZATION_LEVEL) -I$(LIB) -I$(MCAL) -I$(HAL) -I$(APP)
 AFLAGS = $(COMMON_FLAGS) -x assembler-with-cpp
 
