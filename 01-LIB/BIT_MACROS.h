@@ -38,7 +38,7 @@
 #define CLEAR_MASK(reg, mask) 			((reg) &= ~(mask))
 
 /* Toggle multiple bits based on mask */
-#define TOGGLE_MASK(reg, mask) 		((reg) ^= (mask))
+#define TOGGLE_MASK(reg, mask) 			((reg) ^= (mask))
 
 /* Check if a bit is set to 1 and clear it */
 #define TEST_AND_CLEAR_BIT(reg, bit) 	(((reg) >> (bit)) & 1U) && CLEAR_BIT(reg, bit)
